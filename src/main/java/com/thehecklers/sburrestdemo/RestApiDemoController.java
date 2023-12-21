@@ -49,24 +49,19 @@ public class RestApiDemoController {
 
     // Обновляем, если нет - добавляем
     @PutMapping("/{id}")
-    Coffee putCoffee(@PathVariable String id, @RequestBody Coffee coffee) {
+    ResponseEntity<Coffee> putCoffee(@PathVariable String id, @RequestBody Coffee coffee) {
         int coffeeIndex = -1;
 
         for (Coffee c: coffees) {
             if (c.getId().equals(id)) {
                 coffeeIndex = coffees.indexOf(c);
                 coffees.set(coffeeIndex, coffee);
+                break;
             }
         }
-//        return (coffeeIndex == -1) ?  //postCoffee(coffee) : coffee;
-//                        new ResponseEntity<>(postCoffee(coffee), HttpStatus.CREATED) :
-//                        new ResponseEntity<>(coffee, HttpStatus.OK);
-        if (coffeeIndex == -1) {
-            //return new ResponseEntity<?>(postCoffee(coffee), HttpStatus.CREATED);
-            //return new ResponseEntity<Coffee>(postCoffee(coffee), HttpStatus.CREATED);
-        } else {
-            //return new ResponseEntity<>(coffee, HttpStatus.OK);
-        }
+        return (coffeeIndex == -1) ?  //postCoffee(coffee) : coffee;
+                        new ResponseEntity<>(postCoffee(coffee), HttpStatus.CREATED) :
+                        new ResponseEntity<>(coffee, HttpStatus.OK);
     }
 
     // Удалем
